@@ -1,0 +1,21 @@
+@use '@/styles/colors' as c;
+
+.aboutMe {
+  display: flex;
+  width: 100%;
+  gap: 30px;
+
+  .profileImage {
+    border-radius: 50%;
+    width: 250px;
+    height: auto;
+    object-fit: contain;
+    aspect-ratio: 331/425;
+  }
+
+  .information {
+    width: 100%;
+    border: 1.5px solid c.$C_PALETTE_3;
+    border-radius: 8px;
+  }
+}

@@ -1,3 +1,5 @@
+@use '@/styles/colors' as c;
+
 html,
 body,
 div,
@@ -102,6 +104,7 @@ section {
 }
 body {
   line-height: 1;
+  background-color: c.$C_PALETTE_1;
 }
 ol,
 ul {
