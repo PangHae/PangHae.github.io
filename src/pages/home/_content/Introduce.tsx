@@ -13,7 +13,7 @@ const Introduce: FC = () => {
         </strong>
       </div>
       <p className={styles.description}>
-        멈춰있지 않고 꾸준히 학습하고 새로운 기술을 시도하고 도전합니다.
+        멈춰있지 않고 꾸준히 학습하며 새로운 기술을 시도하고 도전합니다.
       </p>
     </section>
   );

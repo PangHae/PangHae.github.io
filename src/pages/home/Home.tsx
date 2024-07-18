@@ -10,13 +10,13 @@ const Home = () => {
       <Introduce />
       <HashAnchor id="about" />
       <About />
-      <HashAnchor id="career" />
-      <section>
-        <h2>Career</h2>
-      </section>
       <HashAnchor id="skills" />
       <section>
         <h2>Skills</h2>
+      </section>
+      <HashAnchor id="career" />
+      <section>
+        <h2>Career</h2>
       </section>
       <HashAnchor id="projects" />
       <section>

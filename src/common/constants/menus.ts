@@ -4,12 +4,12 @@ export const HEADER_MENU = [
     value: 'about',
   },
   {
-    label: 'Career',
-    value: 'career',
-  },
-  {
     label: 'Skills',
     value: 'skills',
+  },
+  {
+    label: 'Career',
+    value: 'career',
   },
   {
     label: 'Projects',
