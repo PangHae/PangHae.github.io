@@ -1,14 +1,23 @@
 import { useEffect, useState } from 'react';
+import { TypeAnimation } from 'react-type-animation';
 import {
   ArrowUpOutlined,
   DownloadOutlined,
   GithubOutlined,
   LinkedinOutlined,
   MailOutlined,
+  MoonOutlined,
+  SunOutlined,
 } from '@ant-design/icons';
 import { Button, message, Progress, Tooltip } from 'antd';
 
+import { useTheme } from '@/components/theme/useTheme';
+import { experiences } from '@/constants/experiences';
+import { projects } from '@/constants/projects';
+import { skills } from '@/constants/skills';
+
 const Home = () => {
+  const { theme, toggleTheme } = useTheme();
   const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
@@ -41,98 +50,52 @@ const Home = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const projects = [
-    {
-      title: 'E-commerce Platform',
-      description:
-        'A full-stack e-commerce solution with React, Node.js, and MongoDB',
-      image:
-        'https://public.readdy.ai/ai/img_res/58231ee680b7b8f1c7bb6ffa8a21c1ef.jpg',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Redux'],
-      demoLink: 'https://demo.example.com',
-      githubLink: 'https://github.com/example',
-    },
-    {
-      title: 'Task Management App',
-      description:
-        'Real-time task management application with team collaboration features',
-      image:
-        'https://public.readdy.ai/ai/img_res/d89362055b0cfcccb615b126ec74325f.jpg',
-      technologies: ['Vue.js', 'Firebase', 'Tailwind CSS'],
-      demoLink: 'https://demo.example.com',
-      githubLink: 'https://github.com/example',
-    },
-    {
-      title: 'AI Image Generator',
-      description:
-        'Web application that generates images using machine learning models',
-      image:
-        'https://public.readdy.ai/ai/img_res/bbed7ff61ae11a1d89d679b610ee931a.jpg',
-      technologies: ['Python', 'TensorFlow', 'FastAPI', 'React'],
-      demoLink: 'https://demo.example.com',
-      githubLink: 'https://github.com/example',
-    },
-  ];
-
-  const experiences = [
-    {
-      company: 'Tmax CoreAI',
-      position: '연구원',
-      period: '2024.04.12 - 2024.10.04',
-      description: 'React Library 개발',
-    },
-    {
-      company: '애자일소다',
-      position: '선임 연구원',
-      period: '2022.07.01 - 2024.04.12',
-      description:
-        "AI 팔레타이징 솔루션 'RoboSoDA', AI 반도체 설계 솔루션 'ChipNSoDA' Frontend 개발",
-    },
-    {
-      company: '애자일소다',
-      position: '인턴',
-      period: '2021.12.20 - 2022.06.30',
-      description: "강화학습 MLOps 솔루션 'BakingSoDA' Frontend 개발",
-    },
-  ];
-
-  const skills = [
-    {
-      category: 'Frontend',
-      items: ['React', 'Vue.js', 'TypeScript', 'Tailwind CSS'],
-    },
-    { category: 'Backend', items: ['Node.js', 'Python', 'Java', 'MongoDB'] },
-    { category: 'DevOps', items: ['Docker', 'Kubernetes', 'AWS', 'CI/CD'] },
-    { category: 'Tools', items: ['Git', 'VS Code', 'Figma', 'Postman'] },
-  ];
-
   const handleDownloadCV = () => {
     message.success('CV downloaded successfully!');
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div
+      className={`min-h-screen ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}
+    >
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+      <nav
+        className={`fixed top-0 left-0 right-0 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} shadow-md z-50`}
+      >
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center h-16">
-            <div className="text-xl font-bold text-gray-800">Portfolio</div>
-            <div className="hidden md:flex space-x-8">
-              {['Home', 'About', 'Experience', 'Projects', 'Skills'].map(
-                (item) => (
-                  <a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    className={`cursor-pointer text-sm font-medium ${
-                      activeSection === item.toLowerCase()
-                        ? 'text-blue-600'
-                        : 'text-gray-600 hover:text-blue-600'
-                    }`}
-                  >
-                    {item}
-                  </a>
-                ),
-              )}
+            <div
+              className={`text-xl font-bold ${theme === 'light' ? 'text-gray-800' : 'text-white'}`}
+            >
+              Portfolio
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="hidden md:flex space-x-8">
+                {['Home', 'About', 'Experience', 'Projects', 'Skills'].map(
+                  (item) => (
+                    <a
+                      key={item}
+                      href={`#${item.toLowerCase()}`}
+                      className={`cursor-pointer text-sm font-medium ${
+                        activeSection === item.toLowerCase()
+                          ? 'text-blue-600'
+                          : theme === 'light'
+                            ? 'text-gray-600 hover:text-blue-600'
+                            : 'text-gray-300 hover:text-blue-400'
+                      }`}
+                    >
+                      {item}
+                    </a>
+                  ),
+                )}
+              </div>
+              <Button
+                onClick={toggleTheme}
+                className={`!rounded-button ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-800'}`} // Changed 'bg-gray-700' to 'bg-gray-800' for better dark theme visibility
+                shape="circle"
+              >
+                {theme === 'light' ? <MoonOutlined /> : <SunOutlined />}
+              </Button>
             </div>
           </div>
         </div>
@@ -149,28 +112,43 @@ const Home = () => {
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-white/90 to-white/30" />
+        <div className="absolute inset-0" />
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Hi, I'm 이광해
+          <h1
+            className={`text-5xl font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-6`}
+          >
+            안녕하세요, 이광해 입니다!
           </h1>
-          <p className="text-xl text-gray-700 mb-8">
-            Full Stack Developer & Software Engineer
+          <p
+            className={`text-xl ${theme === 'light' ? 'text-gray-400' : 'text-gray-600'} mb-8`}
+          >
+            Frontend Developer
           </p>
-          <p className="text-lg text-gray-600 max-w-2xl mb-12">
-            Passionate about creating innovative solutions and delivering
-            exceptional user experiences through clean, efficient code.
-          </p>
-          <Button type="primary" size="large" className="!rounded-button">
-            View My Work
-          </Button>
+          <TypeAnimation
+            className={`text-lg text-gray-500 max-w-2xl mb-12`}
+            sequence={[
+              `사용자가 만족하고 사용할 수 있는,\n사용자가 다시 사용하고 싶은 서비스를 만들고 싶은 개발자`,
+            ]}
+            style={{
+              display: 'block',
+              whiteSpace: 'pre-line',
+              height: '49px',
+            }}
+          />
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white">
+      <section
+        id="about"
+        className={`py-20 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'}`}
+      >
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">About Me</h2>
+          <h2
+            className={`text-3xl font-bold text-center mb-16 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
+          >
+            About Me
+          </h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] overflow-hidden rounded-lg">
               <img
@@ -180,7 +158,9 @@ const Home = () => {
               />
             </div>
             <div>
-              <p className="text-lg text-gray-700 mb-6">
+              <p
+                className={`text-lg ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} mb-6`}
+              >
                 With over 6 years of experience in software development, I
                 specialize in building scalable web applications and
                 implementing modern software solutions. My passion lies in
@@ -233,29 +213,38 @@ const Home = () => {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 bg-gray-50">
+      <section
+        id="experience"
+        className={`py-20 ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}
+      >
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">
+          <h2
+            className={`text-3xl font-bold text-center mb-16 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
+          >
             Work Experience
           </h2>
           <div className="space-y-12">
             {experiences.map((exp, index) => (
               <div
                 key={index}
-                className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow"
+                className={`${theme === 'light' ? 'bg-white' : 'bg-gray-800'} rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}
               >
                 <div className="flex flex-wrap justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900">
+                    <h3 className="text-xl font-bold">{exp.company}</h3>
+                    <p
+                      className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'} text-lg`}
+                    >
                       {exp.position}
-                    </h3>
-                    <p className="text-lg text-gray-600">{exp.company}</p>
+                    </p>
                   </div>
-                  <span className="text-sm font-medium text-gray-500">
-                    {exp.period}
-                  </span>
+                  <span className="text-sm font-medium">{exp.period}</span>
                 </div>
-                <p className="text-gray-700">{exp.description}</p>
+                <p
+                  className={`text-gray-700 ${theme === 'light' ? 'text-gray-700' : 'text-white'}`}
+                >
+                  {exp.description}
+                </p>
               </div>
             ))}
           </div>
@@ -263,16 +252,21 @@ const Home = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 bg-white">
+      <section
+        id="projects"
+        className={`py-20 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'}`}
+      >
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">
+          <h2
+            className={`text-3xl font-bold text-center mb-16 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
+          >
             Featured Projects
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                className={`${theme === 'light' ? 'bg-white' : 'bg-gray-900'} rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}
               >
                 <div className="h-48 overflow-hidden">
                   <img
@@ -283,7 +277,21 @@ const Home = () => {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-gray-600 mb-4">{project.description}</p>
+                  <p
+                    className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'} mb-4`}
+                  >
+                    {project.description}
+                  </p>
+                  <div className="mb-4 text-sm">
+                    {project.result.map((r, i) => (
+                      <p
+                        key={i}
+                        className={`${theme === 'light' ? 'text-gray-800' : 'text-gray-200'} mb-1`}
+                      >
+                        {r}
+                      </p>
+                    ))}
+                  </div>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech, i) => (
                       <span
@@ -294,23 +302,6 @@ const Home = () => {
                       </span>
                     ))}
                   </div>
-                  <div className="flex space-x-4">
-                    <Button
-                      href={project.demoLink}
-                      target="_blank"
-                      className="!rounded-button"
-                    >
-                      Live Demo
-                    </Button>
-                    <Button
-                      href={project.githubLink}
-                      target="_blank"
-                      icon={<GithubOutlined />}
-                      className="!rounded-button"
-                    >
-                      Code
-                    </Button>
-                  </div>
                 </div>
               </div>
             ))}
@@ -319,23 +310,37 @@ const Home = () => {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 bg-gray-50">
+      <section
+        id="skills"
+        className={`py-20 ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}
+      >
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">
+          <h2
+            className={`text-3xl font-bold text-center mb-16 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
+          >
             Skills & Technologies
           </h2>
           <div className="grid md:grid-cols-2 gap-12">
             {skills.map((category, index) => (
-              <div key={index} className="bg-white rounded-lg p-8 shadow-lg">
+              <div
+                key={index}
+                className={`${theme === 'light' ? 'bg-white' : 'bg-gray-800'} rounded-lg p-8 shadow-lg ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'} `}
+              >
                 <h3 className="text-xl font-bold mb-6">{category.category}</h3>
                 <div className="space-y-4">
                   {category.items.map((item, i) => (
                     <div key={i}>
                       <div className="flex justify-between mb-2">
-                        <span className="text-gray-700">{item}</span>
-                        <span className="text-gray-500">85%</span>
+                        <span
+                          className={`text-gray-700 ${theme === 'light' ? 'text-gray-700' : 'text-white'}`}
+                        >
+                          {item}
+                        </span>
+                        <span className="text-gray-500">
+                          {`${category.levels[i]}%`}
+                        </span>
                       </div>
-                      <Progress percent={85} showInfo={false} />
+                      <Progress percent={category.levels[i]} showInfo={false} />
                     </div>
                   ))}
                 </div>
