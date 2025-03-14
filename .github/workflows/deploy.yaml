@@ -53,4 +53,4 @@ jobs:
       # 7. GitHub Pages에 배포 (최신 버전 사용)
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
