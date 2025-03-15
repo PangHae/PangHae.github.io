@@ -52,7 +52,7 @@ const Home = () => {
 
   const handleDownloadCV = () => {
     const link = document.createElement('a');
-    link.href = '/src/assets/이광해_CV.pdf';
+    link.href = '../assets/이광해_CV.pdf';
     link.download = '이광해_CV.pdf';
     document.body.appendChild(link);
     link.click();
