@@ -52,7 +52,7 @@ const Home = () => {
 
   const handleDownloadCV = () => {
     const link = document.createElement('a');
-    link.href = '../assets/이광해_CV.pdf';
+    link.href = '../../../이광해_CV.pdf';
     link.download = '이광해_CV.pdf';
     document.body.appendChild(link);
     link.click();
@@ -108,16 +108,7 @@ const Home = () => {
       </nav>
 
       {/* Hero Section */}
-      <section
-        id="home"
-        className="relative h-screen flex items-center"
-        style={{
-          backgroundImage:
-            'url(https://readdy.ai/api/search-image?query=modern abstract geometric pattern with soft gradient colors professional minimal design background with space for text on left side&width=1440&height=800&seq=4&orientation=landscape&flag=794eb0318489068313c02cce345c81dc)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      <section id="home" className="relative h-screen flex items-center">
         <div className="absolute inset-0" />
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <h1
