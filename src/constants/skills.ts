@@ -11,8 +11,8 @@ export const skills = [
   },
   {
     category: 'DevOps & Database',
-    items: ['Docker', 'MariaDB', 'MySQL', 'Jenkins'],
-    levels: [65, 60, 60, 50],
+    items: ['MariaDB', 'MySQL', 'Jenkins', 'Docker'],
+    levels: [60, 60, 50, 25],
   },
   {
     category: 'Tools',

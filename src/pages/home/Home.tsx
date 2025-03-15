@@ -51,6 +51,12 @@ const Home = () => {
   };
 
   const handleDownloadCV = () => {
+    const link = document.createElement('a');
+    link.href = '/src/assets/이광해_CV.pdf';
+    link.download = '이광해_CV.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     message.success('CV downloaded successfully!');
   };
 
@@ -152,7 +158,7 @@ const Home = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] overflow-hidden rounded-lg">
               <img
-                src="https://public.readdy.ai/ai/img_res/5aed39c8f8b9cfb4087bb709a90768e9.jpg"
+                src="src/assets/me.jpeg"
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
@@ -161,11 +167,13 @@ const Home = () => {
               <p
                 className={`text-lg ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} mb-6`}
               >
-                With over 6 years of experience in software development, I
-                specialize in building scalable web applications and
-                implementing modern software solutions. My passion lies in
-                creating efficient, user-friendly applications that solve
-                real-world problems.
+                2021년부터 Frontend 개발자로서 사용자 경험을 최우선으로 생각하며
+                웹 애플리케이션 개발에 매진해왔습니다. 여러 프로젝트를
+                진행하면서 로딩 시간을 50% 단축, 번들 사이즈를 14% 개선,
+                컴포넌트 초기 렌더링 속도를 90% 향상시키는 등 성능 최적화를 통해
+                사용자 만족도를 크게 높였습니다. 효율적이고 직관적인 서비스를
+                제공하기 위해 끊임없이 고민하며, 기술적 도전과 문제 해결을
+                즐기는 개발자입니다.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
                 <Button
