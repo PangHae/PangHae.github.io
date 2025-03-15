@@ -158,7 +158,7 @@ const Home = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] overflow-hidden rounded-lg">
               <img
-                src="/public/images/me.jpeg"
+                src="../../../images/me.jpeg"
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
