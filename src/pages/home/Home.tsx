@@ -61,7 +61,7 @@ const Home = () => {
   };
 
   return (
-    <div
+    <main
       className={`min-h-screen ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}
     >
       {/* Navigation */}
@@ -348,19 +348,20 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       {/* Back to Top Button */}
       {visible && (
-        <Button
-          className="fixed bottom-8 right-8 !rounded-button"
-          type="primary"
-          shape="circle"
-          icon={<ArrowUpOutlined />}
-          onClick={scrollToTop}
-          size="large"
-        />
+        <div className="fixed right-8 bottom-8">
+          <Button
+            className="!rounded-button"
+            type="primary"
+            shape="circle"
+            icon={<ArrowUpOutlined />}
+            onClick={scrollToTop}
+            size="large"
+          />
+        </div>
       )}
-    </div>
+    </main>
   );
 };
 
