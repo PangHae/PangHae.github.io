@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { TypeAnimation } from 'react-type-animation';
+/* eslint-disable simple-import-sort/imports */
 import {
   ArrowUpOutlined,
   DownloadOutlined,
@@ -10,6 +9,8 @@ import {
   SunOutlined,
 } from '@ant-design/icons';
 import { Button, message, Progress, Tooltip } from 'antd';
+import { useEffect, useState } from 'react';
+import { TypeAnimation } from 'react-type-animation';
 
 import { useTheme } from '@/components/theme/useTheme';
 import { experiences } from '@/constants/experiences';
@@ -73,7 +74,7 @@ const Home = () => {
             <div
               className={`text-xl font-bold ${theme === 'light' ? 'text-gray-800' : 'text-white'}`}
             >
-              Portfolio
+              이광해
             </div>
             <div className="flex items-center space-x-4">
               <div className="hidden md:flex space-x-8">
