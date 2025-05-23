@@ -9,18 +9,29 @@ import {
   SunOutlined,
 } from '@ant-design/icons';
 import { Button, message, Progress, Tooltip } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { TypeAnimation } from 'react-type-animation';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { useTheme } from '@/components/theme/useTheme';
 import { experiences } from '@/constants/experiences';
 import { projects } from '@/constants/projects';
 import { skills } from '@/constants/skills';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Home = () => {
   const { theme, toggleTheme } = useTheme();
   const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+
+  // Refs for animation targets
+  const heroRef = useRef(null);
+  const aboutRef = useRef(null);
+  const experienceRef = useRef(null);
+  const projectsRef = useRef(null);
+  const skillsRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,6 +58,76 @@ const Home = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // GSAP Animations
+  useEffect(() => {
+    // Hero section animation
+    gsap.fromTo(
+      heroRef.current,
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
+    );
+
+    // Scroll animations
+    const sections = [aboutRef, experienceRef, projectsRef, skillsRef];
+    sections.forEach((ref) => {
+      if (ref.current) {
+        gsap.fromTo(
+          ref.current,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: ref.current,
+              start: 'top 80%',
+              toggleActions: 'play none none reverse',
+            },
+          },
+        );
+      }
+    });
+
+    // Project cards animation
+    gsap.fromTo(
+      '.project-card',
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: projectsRef.current,
+          start: 'top 80%',
+        },
+      },
+    );
+
+    // Skills animation
+    gsap.fromTo(
+      '.skill-item',
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: skillsRef.current,
+          start: 'top 80%',
+        },
+      },
+    );
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -63,7 +144,7 @@ const Home = () => {
 
   return (
     <main
-      className={`min-h-screen ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}
+      className={`min-h-screen font-pretendard ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}
     >
       {/* Navigation */}
       <nav
@@ -72,7 +153,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center h-16">
             <div
-              className={`text-xl font-bold ${theme === 'light' ? 'text-gray-800' : 'text-white'}`}
+              className={`text-xl font-bold font-pretendard ${theme === 'light' ? 'text-gray-800' : 'text-white'}`}
             >
               이광해
             </div>
@@ -83,7 +164,7 @@ const Home = () => {
                     <a
                       key={item}
                       href={`#${item.toLowerCase()}`}
-                      className={`cursor-pointer text-sm font-medium ${
+                      className={`cursor-pointer text-sm font-medium font-pretendard ${
                         activeSection === item.toLowerCase()
                           ? 'text-blue-600'
                           : theme === 'light'
@@ -98,7 +179,7 @@ const Home = () => {
               </div>
               <Button
                 onClick={toggleTheme}
-                className={`!rounded-button ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-800'}`} // Changed 'bg-gray-700' to 'bg-gray-800' for better dark theme visibility
+                className={`!rounded-button ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-800'}`}
                 shape="circle"
               >
                 {theme === 'light' ? <MoonOutlined /> : <SunOutlined />}
@@ -109,23 +190,27 @@ const Home = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative h-screen flex items-center">
+      <section
+        id="home"
+        className="relative h-screen flex items-center"
+        ref={heroRef}
+      >
         <div className="absolute inset-0" />
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <h1
-            className={`text-5xl font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-6`}
+            className={`text-5xl font-bold font-pretendard ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-6`}
           >
             안녕하세요, 이광해 입니다!
           </h1>
           <p
-            className={`text-xl ${theme === 'light' ? 'text-gray-400' : 'text-gray-600'} mb-8`}
+            className={`text-xl font-pretendard ${theme === 'light' ? 'text-gray-400' : 'text-gray-600'} mb-8`}
           >
             Frontend Developer
           </p>
           <TypeAnimation
-            className={`text-lg text-gray-500 max-w-2xl mb-12`}
+            className={`text-lg text-gray-500 max-w-2xl mb-12 font-noto-sans`}
             sequence={[
-              `사용자가 만족하고 사용할 수 있는,\n사용자가 다시 사용하고 싶은 서비스를 만들고 싶은 개발자`,
+              `서비스의 첫인상을 설계하고, \n마지막까지 불편함 없이 이어지게 만드는 개발자`,
             ]}
             style={{
               display: 'block',
@@ -140,10 +225,11 @@ const Home = () => {
       <section
         id="about"
         className={`py-20 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'}`}
+        ref={aboutRef}
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2
-            className={`text-3xl font-bold text-center mb-16 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
+            className={`text-3xl font-bold text-center mb-16 font-pretendard ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
           >
             About Me
           </h2>
@@ -157,20 +243,20 @@ const Home = () => {
             </div>
             <div>
               <p
-                className={`text-lg ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} mb-6`}
+                className={`text-lg font-noto-sans ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} mb-6`}
               >
-                2021년부터 Frontend 개발자로서 사용자 경험을 최우선으로 생각하며
-                웹 애플리케이션 개발에 매진해왔습니다. 여러 프로젝트를
-                진행하면서 로딩 시간을 50% 단축, 번들 사이즈를 14% 개선,
-                컴포넌트 초기 렌더링 속도를 90% 향상시키는 등 성능 최적화를 통해
-                사용자 만족도를 크게 높였습니다. 효율적이고 직관적인 서비스를
-                제공하기 위해 끊임없이 고민하며, 기술적 도전과 문제 해결을
-                즐기는 개발자입니다.
+                2021년부터 프론트엔드 개발자로서 웹이라는 인터페이스를 통해
+                사용자와 대화해 왔습니다. 로딩 시간 50% 단축, 번들 사이즈 14%
+                개선, 초기 렌더링 속도 90% 향상 등 수치로 증명된 성능 최적화
+                경험은 사용자 경험을 설계하고 구현하는 데 제가 얼마나 집요한지를
+                보여줍니다. 저는 언제나 &apos;더 빠르게, 더 직관적으로&apos;라는
+                질문을 스스로에게 던지며, 사용자가 머무르고 싶어 하는 웹을
+                만드는 개발자입니다.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
                 <Button
                   icon={<MailOutlined />}
-                  className="!rounded-button"
+                  className="!rounded-button font-pretendard"
                   onClick={() =>
                     (window.location.href = 'mailto:yds05074@gmail.com')
                   }
@@ -179,7 +265,7 @@ const Home = () => {
                 </Button>
                 <Button
                   icon={<DownloadOutlined />}
-                  className="!rounded-button"
+                  className="!rounded-button font-pretendard"
                   onClick={handleDownloadCV}
                 >
                   Download CV
@@ -216,10 +302,11 @@ const Home = () => {
       <section
         id="experience"
         className={`py-20 ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}
+        ref={experienceRef}
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2
-            className={`text-3xl font-bold text-center mb-16 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
+            className={`text-3xl font-bold text-center mb-16 font-pretendard ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
           >
             Work Experience
           </h2>
@@ -231,17 +318,21 @@ const Home = () => {
               >
                 <div className="flex flex-wrap justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-xl font-bold">{exp.company}</h3>
+                    <h3 className="text-xl font-bold font-pretendard">
+                      {exp.company}
+                    </h3>
                     <p
-                      className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'} text-lg`}
+                      className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'} text-lg font-noto-sans`}
                     >
                       {exp.position}
                     </p>
                   </div>
-                  <span className="text-sm font-medium">{exp.period}</span>
+                  <span className="text-sm font-medium font-pretendard">
+                    {exp.period}
+                  </span>
                 </div>
                 <p
-                  className={`text-gray-700 ${theme === 'light' ? 'text-gray-700' : 'text-white'}`}
+                  className={`text-gray-700 font-noto-sans ${theme === 'light' ? 'text-gray-700' : 'text-white'}`}
                 >
                   {exp.description}
                 </p>
@@ -255,10 +346,11 @@ const Home = () => {
       <section
         id="projects"
         className={`py-20 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'}`}
+        ref={projectsRef}
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2
-            className={`text-3xl font-bold text-center mb-16 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
+            className={`text-3xl font-bold text-center mb-16 font-pretendard ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
           >
             Featured Projects
           </h2>
@@ -266,7 +358,7 @@ const Home = () => {
             {projects.map((project, index) => (
               <div
                 key={index}
-                className={`${theme === 'light' ? 'bg-white' : 'bg-gray-900'} rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}
+                className={`project-card ${theme === 'light' ? 'bg-white' : 'bg-gray-900'} rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}
               >
                 <div className="h-48 overflow-hidden">
                   <img
@@ -276,9 +368,11 @@ const Home = () => {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                  <h3 className="text-xl font-bold font-pretendard mb-2">
+                    {project.title}
+                  </h3>
                   <p
-                    className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'} mb-4`}
+                    className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'} mb-4 font-noto-sans`}
                   >
                     {project.description}
                   </p>
@@ -286,7 +380,7 @@ const Home = () => {
                     {project.result.map((r, i) => (
                       <p
                         key={i}
-                        className={`${theme === 'light' ? 'text-gray-800' : 'text-gray-200'} mb-1`}
+                        className={`${theme === 'light' ? 'text-gray-800' : 'text-gray-200'} mb-1 font-noto-sans`}
                       >
                         {r}
                       </p>
@@ -296,7 +390,7 @@ const Home = () => {
                     {project.technologies.map((tech, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm"
+                        className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm font-pretendard"
                       >
                         {tech}
                       </span>
@@ -313,10 +407,11 @@ const Home = () => {
       <section
         id="skills"
         className={`py-20 ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}
+        ref={skillsRef}
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2
-            className={`text-3xl font-bold text-center mb-16 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
+            className={`text-3xl font-bold text-center mb-16 font-pretendard ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
           >
             Skills & Technologies
           </h2>
@@ -326,17 +421,19 @@ const Home = () => {
                 key={index}
                 className={`${theme === 'light' ? 'bg-white' : 'bg-gray-800'} rounded-lg p-8 shadow-lg ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'} `}
               >
-                <h3 className="text-xl font-bold mb-6">{category.category}</h3>
+                <h3 className="text-xl font-bold mb-6 font-pretendard">
+                  {category.category}
+                </h3>
                 <div className="space-y-4">
                   {category.items.map((item, i) => (
-                    <div key={i}>
+                    <div key={i} className="skill-item">
                       <div className="flex justify-between mb-2">
                         <span
-                          className={`text-gray-700 ${theme === 'light' ? 'text-gray-700' : 'text-white'}`}
+                          className={`text-gray-700 font-noto-sans ${theme === 'light' ? 'text-gray-700' : 'text-white'}`}
                         >
                           {item}
                         </span>
-                        <span className="text-gray-500">
+                        <span className="text-gray-500 font-pretendard">
                           {`${category.levels[i]}%`}
                         </span>
                       </div>
