@@ -56,6 +56,7 @@ function HomeSection() {
     </section>
   );
 }
+
 function AboutSection() {
   const aboutRef = useRef(null);
 
@@ -87,12 +88,14 @@ function AboutSection() {
           </div>
           <div>
             <p className={`text-lg font-noto-sans text-gray-300 mb-6`}>
-              2021년부터 프론트엔드 개발자로서 웹이라는 인터페이스를 통해
-              사용자와 대화해 왔습니다. 로딩 시간 50% 단축, 번들 사이즈 14%
-              개선, 초기 렌더링 속도 90% 향상 등 수치로 증명된 성능 최적화
-              경험은 사용자 경험을 설계하고 구현하는 데 제가 얼마나 집요한지를
-              보여줍니다. 저는 언제나 &apos;더 빠르게, 더 직관적으로&apos;라는
-              질문을 스스로에게 던지며, 사용자가 머무르고 싶어 하는 웹을 만드는
+              2021년부터 프론트엔드 개발자로 일하며, 사용자에게 더 나은 경험을
+              전달하는 인터페이스를 고민하고 구현해 왔습니다. 그 결과,
+              <p className="text-xl">
+                로딩 시간 50% 단축, 번들 사이즈 14% 개선, 초기 렌더링 속도 90%
+                향상 등 사용자가 만족할 수 있는 결과를 도출해냈습니다.
+              </p>
+              저는 언제나 &apos;더 빠르게, 더 직관적으로&apos;라는 질문을
+              스스로에게 던지는, 사용자가 머무르고 싶어 하는 웹을 만드는
               개발자입니다.
             </p>
             <div className="flex flex-wrap gap-4 mb-8">
@@ -141,11 +144,12 @@ function AboutSection() {
     </section>
   );
 }
+
 function ExperienceSection() {
   const experienceRef = useRef(null);
 
   return (
-    <section id="experience" className={`py-20 pb-0`} ref={experienceRef}>
+    <section id="experience" className={`py-20`} ref={experienceRef}>
       <div className="max-w-7xl mx-auto px-4">
         <h2
           className={`text-3xl font-bold text-center mb-16 font-pretendard text-white`}
@@ -171,7 +175,7 @@ function ExperienceSection() {
                   {exp.period}
                 </span>
               </div>
-              <p className={`text-gray-700 font-noto-sans text-white`}>
+              <p className={` font-noto-sans text-gray-400`}>
                 {exp.description}
               </p>
             </div>
@@ -181,6 +185,7 @@ function ExperienceSection() {
     </section>
   );
 }
+
 function ProjectsSection() {
   return (
     <section id="projects" className="py-20">
@@ -210,7 +215,7 @@ function ProjectsSection() {
                 </p>
                 <div className="mb-4 text-sm">
                   {project.result.map((r, i) => (
-                    <p key={i} className="text-[#eaeaea] mb-1 font-noto-sans">
+                    <p key={i} className="text-gray-400 mb-1 font-noto-sans">
                       {r}
                     </p>
                   ))}
@@ -283,6 +288,7 @@ export default function SlackPortfolio() {
   return (
     <div className="flex h-screen bg-[#19171c] font-poppins">
       {/* Sidebar */}
+      {/* <aside className="w-16 flex flex-col"></aside> */}
       <aside className="w-64 flex flex-col bg-[#1a1d21]">
         <div className="h-16 flex items-center px-6 text-lg font-bold text-white border-b border-[#23272f] bg-[#350d36]">
           FE 개발자 이광해
@@ -309,7 +315,7 @@ export default function SlackPortfolio() {
       </aside>
       {/* Main Content */}
       <main
-        className={`flex-1 bg-[#19171c] p-10 ${active === 'home' ? '' : ' overflow-y-auto'}`}
+        className={`flex-1 bg-[#19171c] p-6 ${active === 'home' ? '' : ' overflow-y-auto'}`}
       >
         {active === 'home' && <HomeSection />}
         {active === 'about' && <AboutSection />}
