@@ -38,7 +38,7 @@ export function ExperienceSection() {
                   {exp.period}
                 </span>
               </div>
-              <p className={` font-noto-sans text-gray-800`}>
+              <p className={` font-noto-sans text-gray-200`}>
                 {exp.description}
                 {exp.details && (
                   <ul className="list-disc list-inside text-gray-400">
@@ -77,7 +77,7 @@ export function ExperienceSection() {
                   {exp.period}
                 </span>
               </div>
-              <p className={` font-noto-sans text-gray-800`}>
+              <p className={` font-noto-sans text-gray-200`}>
                 {exp.description}
                 {exp.details && (
                   <ul className="list-disc list-inside text-gray-400">
